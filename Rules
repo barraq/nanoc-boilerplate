@@ -1,0 +1,96 @@
+#!/usr/bin/env ruby
+
+# A few helpful tips about the Rules file:
+#
+# * The string given to #compile and #route are matching patterns for
+#   identifiers--not for paths. Therefore, you can’t match on extension.
+#
+# * The order of rules is important: for each item, only the first matching
+#   rule is applied.
+#
+# * Item identifiers start and end with a slash (e.g. “/about/” for the file
+#   “content/about.html”). To select all children, grandchildren, … of an
+#   item, use the pattern “/about/*/”; “/about/*” will also select the parent,
+#   because “*” matches zero or more characters.
+
+
+#
+# Compiling
+#
+
+# The main javascripts and stylesheets files
+compile %r{/assets/(js|css)/main.*} do
+  filter :sprockets, {
+    :css_compressor => :sass,
+    :js_compressor  => :uglifier
+  }
+end
+
+compile %r{/assets/(css|js)/(vendor|app)/.+} do
+    # don’t compile partials
+end
+
+compile %r{/(humans)|(robots)/} do
+  filter :erb
+end
+
+compile '*' do
+  if item.binary?
+    # don’t filter binary items
+  else
+    ext, kind = split_ext(item[:extension], default='html')
+
+    case kind
+    when 'erb'
+      filter :erb
+    when 'haml'
+      filter :haml
+    end
+
+    layout item[:layout] || 'raw'
+  end
+end
+
+#
+# Rooting
+#
+
+route %r{/assets/(js|css)/main.*} do
+  Nanoc::Helpers::Sprockets.asset_path(item)
+end
+
+route %r{/assets/(js|css)/vendor/.*} do
+  item.identifier.chop + '.' + item[:extension]
+end
+
+# Don't inlcude any library files, as they should be included
+# in the manifest files (main.js, main.css)
+route %r{/assets/(js|css)/.*} do
+  nil
+end
+
+route %r{/(humans)|(robots)/} do
+  ext, kind = split_ext(item[:extension], default='txt')
+  item.identifier.chop + '.' + ext
+end
+
+route '*' do
+
+  if item.binary?
+    # Write item with identifier /foo/ to /foo.ext
+    item.identifier.chop + '.' + item[:extension]
+  else
+    ext, kind = split_ext(item[:extension], default='html')
+    case ext
+    when 'html'
+      # Write html item with identifier /foo/ to /foo/index.#{ext}
+      item.identifier + 'index' + '.' + ext
+    else
+      # Write item with identifier /foo/ to /foo.#{ext}
+      item.identifier.chop + '.' + ext
+    end
+  end
+end
+
+layout '*', :haml
+#layout '*', :haml, { :format => :html5, :ugly => true }

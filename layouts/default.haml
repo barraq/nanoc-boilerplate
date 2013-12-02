@@ -1,0 +1,50 @@
+!!! 5
+%html{lang: "#{ @item[:lang] || @config[:lang] }", class: 'no-js'}
+%head
+    %meta{charset: 'utf-8'}
+    / Always force latest IE rendering engine (even in intranet) &amp; Chrome Frame
+    / Remove this if you use the .htaccess
+    %meta{content: 'IE=edge,chrome=1', 'http-equiv' => 'X-UA-Compatible'}
+
+    / metadata
+    %title= @item[:title]
+    %meta{content: @item[:description], name: 'description'}
+    %meta{content: @item[:author] || @config[:author][:name], name: 'author'}
+    %meta{content: @item[:tag], name: 'keywords'}
+    %meta{content: "nanoc #{Nanoc::VERSION}", name: 'generator'}
+
+    / viewport
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0'}
+
+    / favicon.ico and apple-touch-icon.png
+    %link{href: '/favicon.ico', rel: 'shortcut icon'}
+    %link{href: '/apple-touch-icon.png', rel: 'apple-touch-icon'}
+
+    / we are people, not machines
+    %link{href: '/humans.txt', rel: 'author'}
+
+    %link{href: '/assets/css/vendor/normalize.css', rel: 'stylesheet'}
+    %link{href: '/assets/css/main.css', rel: 'stylesheet'}
+    %script{src: '/assets/js/vendor/modernizr-2.6.2.min.js'}
+%body
+    /[if lt IE 8 ]
+        %p.browsehappy
+            You are using an <strong>outdated</strong> browser.
+            Please <a href="http://browsehappy.com/">upgrade your browser</a> or
+            <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a>
+            to improve your experience.
+
+    = yield
+
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    :javascript
+        window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.10.2.min.js"><\/script>')
+    %script{src: "/assets/js/plugins.js"}
+    %script{src: "/assets/js/main.js"}
+    :javascript
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='//www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create',"#{@config[:google_analytics]}");ga('send','pageview');
