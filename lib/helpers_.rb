@@ -11,6 +11,7 @@ include Nanoc::Helpers::CacheBusting
 
 # Custom helpers
 include Nanoc::Helpers::Utils
+include Nanoc::Helpers::Layout
 
 Nanoc::Helpers::Sprockets.configure do |config|
   config.environment = Nanoc::Filters::Sprockets.environment
