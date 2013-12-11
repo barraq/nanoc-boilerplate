@@ -6,7 +6,7 @@ module Nanoc::Filters
 
     def self.environment
       environment = ::Sprockets::Environment.new(File.expand_path('.')) do |env|
-        assets =  ['css', 'js', 'fonts']
+        assets =  ['css', 'css/pages', 'js', 'fonts']
         paths =   ['content/assets/', 'vendor/assets/' ]
         paths += paths.map{|p| assets.map{|f| "#{p}#{f}"}}.flatten
 

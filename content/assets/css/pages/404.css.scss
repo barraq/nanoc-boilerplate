@@ -1,0 +1,21 @@
+@import "compass";
+
+.wrapper {
+  width: 80%;
+  max-width: 650px;
+  min-width: image-width("404.png");
+  margin-left: auto;
+  margin-right: auto;
+
+  header {
+    margin-top: 10%;
+  }
+
+  footer, form, header { text-align: center; }
+
+  p, form { padding: 8px; }
+}
+
+a { color: #333333; }
+
+.info { background-color: #eeeded; border: 1px solid #d6d5d5; }

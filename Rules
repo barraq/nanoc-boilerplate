@@ -26,11 +26,18 @@ compile %r{/assets/(js|css)/main.*} do
   }
 end
 
+compile %r{/assets/css/pages/*} do
+  filter :sprockets, {
+    :css_compressor => :sass,
+    :js_compressor  => :uglifier
+  }
+end
+
 compile %r{/assets/(css|js)/(vendor|app)/.+} do
     # don’t compile partials
 end
 
-compile %r{/(humans)|(robots)/} do
+compile %r{/(humans|robots|htaccess)/} do
   filter :erb
 end
 
@@ -59,6 +66,10 @@ route %r{/assets/(js|css)/main.*} do
   Nanoc::Helpers::Sprockets.asset_path(item)
 end
 
+route %r{/assets/css/pages/*} do
+  Nanoc::Helpers::Sprockets.asset_path(item)
+end
+
 route %r{/assets/(js|css)/vendor/.*} do
   item.identifier.chop + '.' + item[:extension]
 end
@@ -69,9 +80,13 @@ route %r{/assets/(js|css)/.*} do
   nil
 end
 
-route %r{/(humans)|(robots)/} do
+route %r{/(humans|robots)/} do
   ext, kind = split_ext(item[:extension], default='txt')
   item.identifier.chop + '.' + ext
+end
+
+route '/htaccess/' do
+  '/.htaccess'
 end
 
 route '*' do
