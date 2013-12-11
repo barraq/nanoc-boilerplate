@@ -1,0 +1,40 @@
+---
+title: Oops !
+layout: default
+---
+
+%div.wrapper
+  %header
+    %img{src: "/media/images/404.png", alt: "#{item[:title]}"}
+  %div
+    %p.info
+      :plain
+        You've been redirected to this page because the resource you requested could not be found, which means that you've tried to access a page that does not exist. If you've clicked a link, that link is very probably outdated, so the pointed resource has been deleted or moved for some reason. If you typed in an address, you may have mispelled it (note that addresses are CaSe sEnSiTiVe).
+    %p.help
+      %span Here are some suggestions:
+      %ul
+        %li
+          %a{href: "http://remi.barraquand.com/contact/"} Contact me
+          about this issue,
+        %li<
+          Go to
+          %a{href: "/"} Homepage
+        %li<
+          Go to
+          %a{href: "/"} Homepage
+        %li<
+          Browse the
+          %a{href: "/sitemap.xml"} site map
+        %li<
+          %a{href: "javascript:history.back(1)"} Go back
+          and try another link, or
+        %li 
+          Search on Google:
+          %form{action: "http://www.google.com/search", method: "get"}
+            %input{maxlength: "255", name: "q", size: "31", type: "text", value: ""}
+            %input{type: "submit", value: "Google Search"}
+            %input{name: "sitesearch", type: "hidden", value: "#{config[:base_url]}"}
+        
+  %footer<
+    &copy; Rémi Barraquand | Go back
+    %a{href: "/"} home
