@@ -9,3 +9,5 @@ require 'modular-scale'
 require 'sprockets-sass'
 require 'nanoc/cachebuster'
 require 'nanoc-sprockets-filter'
+
+Compass.add_project_configuration File.expand_path('config/compass.rb')
