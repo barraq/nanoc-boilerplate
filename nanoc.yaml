@@ -3,6 +3,21 @@
 # will be considered as binary.
 text_extensions: [ 'coffee', 'css', 'erb', 'haml', 'handlebars', 'hb', 'htm', 'html', 'js', 'less', 'markdown', 'md', 'ms', 'mustache', 'php', 'rb', 'sass', 'scss', 'txt', 'xhtml', 'xml' ]
 
+# Site metadata
+lang: 'en'
+
+author:
+  name: 'Your Name'
+  email: 'your@email.com'
+  twitter: '@yourtwitter'
+  location: 'Some place'
+
+google_analytics: '...'
+
+# The base URL for the website, for use in sitemaps etc. Something like
+# http://domain.tld
+base_url: http://domain.tld
+
 # The path to the directory where all generated files will be written to. This
 # can be an absolute path starting with a slash, but it can also be path
 # relative to the site directory.
@@ -57,15 +72,3 @@ data_sources:
     # will have the identifier “/about/” when turned off, but when turned on
     # it will become “/about.html/” instead.
     allow_periods_in_identifiers: false
-
-# Site metadata
-
-lang: 'en'
-
-author:
-  name: 'Your Name'
-  email: 'your@email.com'
-  twitter: '@yourtwitter'
-  location: 'Some place'
-
-google_analytics: '...'
