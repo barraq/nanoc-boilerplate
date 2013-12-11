@@ -9,6 +9,7 @@ lang: 'en'
 author:
   name: 'Your Name'
   email: 'your@email.com'
+  contact: '/contact/'
   twitter: '@yourtwitter'
   location: 'Some place'
 
