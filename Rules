@@ -18,29 +18,33 @@
 # Compiling
 #
 
-# The main javascripts and stylesheets files
-compile %r{/assets/(js|css)/main.*} do
+# Compile main javascripts and stylesheets files
+compile %r{/assets/(javascripts|stylesheets)/main.*} do
   filter :sprockets, {
     :css_compressor => :sass,
     :js_compressor  => :uglifier
   }
 end
 
-compile %r{/assets/css/pages/*} do
+# Compile per-page stylesheets files
+compile %r{/assets/stylesheets/pages/*} do
   filter :sprockets, {
     :css_compressor => :sass,
     :js_compressor  => :uglifier
   }
 end
 
-compile %r{/assets/(css|js)/(vendor|app)/.+} do
+# Ignore all other javascripts and stylesheets files
+compile %r{/assets/(javascripts|stylesheets)/(vendor|site)/.+} do
     # don’t compile partials
 end
 
+# Compile humans, robots and htaccess
 compile %r{/(humans|robots|htaccess)/} do
   filter :erb
 end
 
+# handle all others
 compile '*' do
   if item.binary?
     # don’t filter binary items
@@ -62,21 +66,24 @@ end
 # Rooting
 #
 
-route %r{/assets/(js|css)/main.*} do
+# Root main javascripts and stylesheets files
+route %r{/assets/(javascipts|stylesheets)/main.*} do
   Nanoc::Helpers::Sprockets.asset_path(item)
 end
 
-route %r{/assets/css/pages/*} do
+# Root per-page stylesheets files
+route %r{/assets/stylesheets/pages/*} do
   Nanoc::Helpers::Sprockets.asset_path(item)
 end
 
-route %r{/assets/(js|css)/vendor/.*} do
+# Root vendor javascripts and stylesheets files
+route %r{/assets/(javascripts|stylesheets)/vendor/.*} do
   item.identifier.chop + '.' + item[:extension]
 end
 
 # Don't inlcude any library files, as they should be included
 # in the manifest files (main.js, main.css)
-route %r{/assets/(js|css)/.*} do
+route %r{/assets/(javascripts|stylesheets)/.*} do
   nil
 end
 
