@@ -1,7 +1,7 @@
 source ENV.fetch('GEM_SOURCE','https://rubygems.org')
 
 # Nanoc framework
-gem 'nanoc',      '~>3.1'
+gem 'nanoc',      '~>3.6.7'
 gem 'adsf',       '~>1.0'
 
 # Filesystem watcher
