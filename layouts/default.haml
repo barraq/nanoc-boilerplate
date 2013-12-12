@@ -24,13 +24,13 @@
         %link{href: '/humans.txt', rel: 'author'}
 
         / stylesheets
-        %link{href: '/assets/css/vendor/normalize.css', rel: 'stylesheet'}
-        %link{href: '/assets/css/main.css', rel: 'stylesheet'}
+        %link{href: '/assets/stylesheets/vendor/normalize.css', rel: 'stylesheet'}
+        %link{href: '/assets/stylesheets/main.css', rel: 'stylesheet'}
 
         = page_stylesheet_tag
 
         / scripts
-        %script{src: '/assets/js/vendor/modernizr-2.6.2.min.js'}
+        %script{src: '/assets/javascripts/vendor/modernizr-2.6.2.min.js'}
     %body
         /[if lt IE 8 ]
             %p.browsehappy
@@ -44,8 +44,8 @@
         %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
         :javascript
             window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.10.2.min.js"><\/script>')
-        %script{src: "/assets/js/plugins.js"}
-        %script{src: "/assets/js/main.js"}
+        %script{src: "/assets/javascripts/plugins.js"}
+        %script{src: "/assets/javascripts/main.js"}
         :javascript
             (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
             function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
