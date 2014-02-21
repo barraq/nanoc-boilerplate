@@ -19,7 +19,7 @@
 #
 
 # Compile main javascripts and stylesheets files
-compile %r{/assets/(javascripts|stylesheets)/main.*} do
+compile %r{/assets/(javascripts|stylesheets)/(main|plugins).*} do
   filter :sprockets, {
     :css_compressor => :sass,
     :js_compressor  => :uglifier
@@ -44,6 +44,10 @@ compile %r{/(humans|robots|htaccess)/} do
   filter :erb
 end
 
+compile '/static/*' do
+  # don't compile static
+end
+
 # handle all others
 compile '*' do
   if item.binary?
@@ -66,19 +70,20 @@ end
 # Rooting
 #
 
+# Root static first
+route '/static/*' do
+  item.identifier.chop['/static/'.length-1..-1]
+end
+
 # Root main javascripts and stylesheets files
-route %r{/assets/(javascipts|stylesheets)/main.*} do
+route %r{/assets/(javascripts|stylesheets)/(main|plugins).*} do
   Nanoc::Helpers::Sprockets.asset_path(item)
 end
 
-# Root per-page stylesheets files
-route %r{/assets/stylesheets/pages/*} do
-  Nanoc::Helpers::Sprockets.asset_path(item)
-end
 
-# Root vendor javascripts and stylesheets files
-route %r{/assets/(javascripts|stylesheets)/vendor/.*} do
-  item.identifier.chop + '.' + item[:extension]
+# Root per-page javascript and stylesheet files
+route %r{/assets/(javascripts|stylesheets)/pages/*} do
+  Nanoc::Helpers::Sprockets.asset_path(item)
 end
 
 # Don't inlcude any library files, as they should be included

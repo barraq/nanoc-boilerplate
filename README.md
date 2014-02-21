@@ -6,23 +6,23 @@ framework.
 
 To get started simply run:
 
-    >   bundle install bundle exec guard
+    $ bundle install 
+    $ bundle exec guard
 
 To view the output run:
 
-    >   nanoc view
+    $ nanoc view
 
 For live reload you can install the free LiveReload plugin for your favorite
 browser: Safari, Firefox, Chrome or IE.
 
 ## Extra Functionality
 
-- Includes [jQuery](http://jquery.com/)
-
 ### Assets Management
 
 - Supports assets management, preprocessing (coffescript, sass, less, etc...), mignification with [Sprockets](https://github.com/yannlugrin/nanoc-sprockets-filter)
 - Supports [Compass](http://compass-style.org/) framework
+- Includes [jQuery](http://jquery.com/), [Normalize.css](http://necolas.github.io/normalize.css/), [Modernizr](http://modernizr.com/)
 
 ### Caching
 
@@ -37,22 +37,20 @@ browser: Safari, Firefox, Chrome or IE.
 
 - Supports [Markdown](https://github.com/gettalong/kramdown)
 
-
 ## Structure
     
     ├── content
     │   ├── assets
     │   │   ├── stylesheets
-    │   │   │    ├── site               -- site stylesheets components
+    │   │   │    ├── site               -- site stylesheets
     │   │   │    ├── pages              -- per page stylesheets
     │   │   │    ├── vendor             -- vendor stylesheets
-    │   │   │    └── main.css.scss      -- main stylesheets (includes site/ components)
+    │   │   │    └── main.css.scss      -- main stylesheets
     │   │   ├── javascripts
-    │   │   │    ├── site               -- site javascripts components
+    │   │   │    ├── site               -- site javascripts
     │   │   │    ├── vendor             -- vendor javascripts
-    │   │   │    ├── main.js            -- main javascripts (includes site/ components)
+    │   │   │    ├── main.js            -- main javascripts
     │   │   │    └── plugin.js
-    │   │   └── fonts
     │   ├── media
     │   │   ├── images
     │   ├── 404.html.haml
@@ -61,6 +59,11 @@ browser: Safari, Firefox, Chrome or IE.
     │   ├── htaccess.txt
     │   ├── humans.txt
     │   └── robot.txt
+    ├── static
+    │   ├── assets
+    │   │   ├── fonts
+    │   │   ├── stylesheets
+    │   │   ├── javascripts
     ├── config
     │   ├── compass.rb
     ├── layouts

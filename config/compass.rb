@@ -7,5 +7,7 @@ css_dir      = 'output/assets/stylesheets'
 images_dir = 'content/media/images/'
 generated_images_dir = 'output/media/images'
 
-fonts_dir = 'content/assets/fonts'
+fonts_dir = 'static/assets/fonts'
 http_fonts_path = 'assets/fonts'
+
+sass_options = {:debug_info => false}
