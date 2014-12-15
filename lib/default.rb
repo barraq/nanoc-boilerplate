@@ -1,13 +1,7 @@
-# All files in the 'lib' directory will be loaded
-# before nanoc starts compiling.
-
 require 'time'
-require 'sass'
 require 'compass'
-require 'uglifier'
-require 'modular-scale'
-require 'sprockets-sass'
+require 'nanoc-sprockets'
 require 'nanoc/cachebuster'
-require 'nanoc-sprockets-filter'
 
 Compass.add_project_configuration File.expand_path('config/compass.rb')
+Sass.load_paths << Compass::Frameworks['compass'].stylesheets_directory

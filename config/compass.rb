@@ -1,4 +1,4 @@
-http_path    = "/" 
+http_path    = "/"
 project_path = File.expand_path('.')
 
 sass_dir     = 'content/assets/stylesheets'

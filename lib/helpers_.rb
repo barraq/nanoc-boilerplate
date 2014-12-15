@@ -7,20 +7,20 @@ include Nanoc::Helpers::LinkTo
 include Nanoc::Helpers::XMLSitemap
 
 # Community helpers
-include Nanoc::Helpers::Sprockets
+include Nanoc::Sprockets::Helper
 include Nanoc::Helpers::CacheBusting
 
 # Custom helpers
 include Nanoc::Helpers::Utils
+include Nanoc::Helpers::Post
 include Nanoc::Helpers::Layout
 
-Nanoc::Helpers::Sprockets.configure do |config|
-  config.environment = Nanoc::Filters::Sprockets.environment
-  config.prefix      = '/assets'
-  config.digest      = true
-
-  # Force to debug mode in development mode
-  # Debug mode automatically sets
-  # expand = true, digest = false, manifest = false
-  config.debug       = true #if development?
+# Define custom Sprockets environments
+Nanoc::Sprockets::Helper.configure do |config|
+  config.environment = ::Sprockets::Environment.new(File.expand_path('.')) do |env|
+    # load defaults paths
+    Nanoc::Sprockets::Helper::DEFAULT_PATHS.each { |path| env.append_path path }
+    # load extra paths
+    env.append_path 'bower'
+  end
 end

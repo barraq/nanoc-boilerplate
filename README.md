@@ -1,8 +1,7 @@
 nanoc-boilerplate
 =================
 
-Personal boilerplate for [Nanoc] static site generator
-framework.
+Personal boilerplate for [Nanoc] static site generator framework.
 
 To get started simply run:
 
@@ -13,15 +12,15 @@ To view the output run:
 
     $ nanoc view
 
-For live reload you can install the free LiveReload plugin for your favorite
-browser: Safari, Firefox, Chrome or IE.
+For live reload you can install the free LiveReload plugin for your favorite browser: Safari, Firefox, Chrome or IE.
 
 ## Extra Functionality
 
 ### Assets Management
 
-- Supports assets management, preprocessing (coffescript, sass, less, etc...), mignification with [Sprockets](https://github.com/yannlugrin/nanoc-sprockets-filter)
-- Supports [Compass](http://compass-style.org/) framework
+- Supports [Bower](http://bower.io/) package manager.
+- Supports assets management, preprocessing (coffescript, sass, less, etc...), mignification with [Sprockets3](https://github.com/barraq/nanoc-sprockets).
+- Integrated with [Compass](http://compass-style.org/) framework
 - Includes [jQuery](http://jquery.com/), [Normalize.css](http://necolas.github.io/normalize.css/), [Modernizr](http://modernizr.com/)
 
 ### Caching
@@ -59,6 +58,7 @@ browser: Safari, Firefox, Chrome or IE.
     │   ├── htaccess.txt
     │   ├── humans.txt
     │   └── robot.txt
+    ├── bower
     ├── static
     │   ├── assets
     │   │   ├── fonts

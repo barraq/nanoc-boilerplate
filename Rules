@@ -14,86 +14,54 @@
 #   because “*” matches zero or more characters.
 
 
+# static
 #
-# Compiling
-#
-
-# Compile main javascripts and stylesheets files
-compile %r{/assets/(javascripts|stylesheets)/(main|plugins).*} do
-  filter :sprockets, {
-    :css_compressor => :sass,
-    :js_compressor  => :uglifier
-  }
-end
-
-# Compile per-page stylesheets files
-compile %r{/assets/stylesheets/pages/*} do
-  filter :sprockets, {
-    :css_compressor => :sass,
-    :js_compressor  => :uglifier
-  }
-end
-
-# Ignore all other javascripts and stylesheets files
-compile %r{/assets/(javascripts|stylesheets)/(vendor|site)/.+} do
-    # don’t compile partials
-end
-
-# Compile humans, robots and htaccess
-compile %r{/(humans|robots|htaccess)/} do
-  filter :erb
-end
 
 compile '/static/*' do
   # don't compile static
 end
 
-# handle all others
-compile '*' do
-  if item.binary?
-    # don’t filter binary items
-  else
-    ext, kind = split_ext(item[:extension], default='html')
-
-    case kind
-    when 'erb'
-      filter :erb
-    when 'haml'
-      filter :haml
-    end
-
-    layout item[:layout] || 'raw'
-  end
-end
-
-#
-# Rooting
-#
-
-# Root static first
 route '/static/*' do
   item.identifier.chop['/static/'.length-1..-1]
 end
 
-# Root main javascripts and stylesheets files
-route %r{/assets/(javascripts|stylesheets)/(main|plugins).*} do
-  Nanoc::Helpers::Sprockets.asset_path(item)
+# partials
+
+compile '/assets/(javascripts|stylesheets)/(vendor|site)/.+' do
+  next
 end
 
-
-# Root per-page javascript and stylesheet files
-route %r{/assets/(javascripts|stylesheets)/pages/*} do
-  Nanoc::Helpers::Sprockets.asset_path(item)
-end
-
-# Don't inlcude any library files, as they should be included
-# in the manifest files (main.js, main.css)
-route %r{/assets/(javascripts|stylesheets)/.*} do
+route '/assets/(javascripts|stylesheets)/(vendor|site)/.*' do
   nil
 end
 
-route %r{/(humans|robots)/} do
-  ext, kind = split_ext(item[:extension], default='txt')
+# stylesheets/javascripts
+
+compile '/assets/(javascripts|stylesheets)/(main|pages/*)' do
+  filter :sprockets, {
+                       :css_compressor => :sass,
+                       :js_compressor => :uglifier
+                   }
+end
+
+route '/assets/(javascripts|stylesheets)/(main|pages/*)' do
+  Nanoc::Sprockets::Helper.asset_path(item)
+end
+
+# Don't include any library files, as they should be included
+# in the manifest files (main.js, main.css)
+route %r{/assets/(javascripts|stylesheets)/.*} do
+  next
+end
+
+# extra (humans, robots and htaccess)
+
+compile '/(humans|robots|htaccess)/' do
+  filter :erb
+end
+
+route '/(humans|robots)/' do
+  ext, kind = split_ext(item[:extension], default: 'txt')
   item.identifier.chop + '.' + ext
 end
 
@@ -101,23 +69,61 @@ route '/htaccess/' do
   '/.htaccess'
 end
 
-route '*' do
+# bower
 
+compile '/bower/*' do
+  # don't compile static
+end
+
+route '/bower/*' do
+  nil
+end
+
+# fallback
+
+compile '*' do
   if item.binary?
-    # Write item with identifier /foo/ to /foo.ext
+    next
+  else
+    ext, kind = split_ext(item[:extension], default: 'html')
+
+    case kind
+      when 'erb'
+        filter :erb
+      when 'haml'
+        filter :haml
+      when 'md'
+        filter :smartlink
+        filter :kramdown
+    end
+
+    layout item[:layout] || 'raw'
+
+    filter :relativize_paths, :type => :html
+  end
+end
+
+route %r{/root/*} do
+  if not item.binary?
+    ext, kind = split_ext(item[:extension], default: 'html')
+    internationalized_identifier_for(item).chop + '.' + ext
+  else
+    nil
+  end
+end
+
+route '*' do
+  if item.binary?
     item.identifier.chop + '.' + item[:extension]
   else
-    ext, kind = split_ext(item[:extension], default='html')
+    ext, kind = split_ext(item[:extension], default: 'html')
     case ext
-    when 'html'
-      # Write html item with identifier /foo/ to /foo/index.#{ext}
-      item.identifier + 'index' + '.' + ext
-    else
-      # Write item with identifier /foo/ to /foo.#{ext}
-      item.identifier.chop + '.' + ext
+      when 'html'
+        item.identifier + 'index' + '.' + ext
+      else
+        item.identifier.chop + '.' + ext
     end
   end
 end
 
-layout '*', :haml
-#layout '*', :haml, { :format => :html5, :ugly => true }
+layout '*', :haml, { :format => :html5, :ugly => true }

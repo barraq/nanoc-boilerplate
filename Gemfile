@@ -30,10 +30,11 @@ gem 'modular-scale'
 # Template
 gem 'haml'
 
+# Parsing
+gem 'nokogiri', '1.6.4.1'
+
 # Sprockets (library for compiling and serving web assets)
-gem 'sprockets-sass'
-gem 'sprockets-helpers'
-gem 'nanoc-sprockets-filter'
+gem 'nanoc-sprockets3', '~> 1.0.2'
 
 group :development do
   gem 'guard-livereload', require: false
